@@ -1,0 +1,4 @@
+_id,first_name,last_name,email,UUID,career_level,job_major,years_of_experience,degree_type,skills,nationality,city,salary,gender
+654ab7312eedf0c577b0b60c,John,Doe,john.doe@example.com,,Senior,Software Engineer,5,Master,"['Python', 'JavaScript', 'SQL']",United States,New York,80000.0,Male
+654ab7522eedf0c577b0b60d,John1,Doe1,john.doe1@example.com,,Senior,Software Engineer,5,Master,"['Python', 'JavaScript', 'SQL']",United States,Jordan,80000.0,Male
+654ac6a424449f683f765476,John1,Doe1,john.doe1@example.com,,Senior,Software Engineer,5,Master,"['Python', 'JavaScript', 'SQL']",United States,Jordan,80000.0,Male
