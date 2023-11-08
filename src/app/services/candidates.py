@@ -1,7 +1,7 @@
 from bson import ObjectId
 from fastapi import HTTPException
 
-from app.db import candidates_collection
+from app.db.connection import candidates_collection
 from app.models.candidates import CandidateCreate
 
 

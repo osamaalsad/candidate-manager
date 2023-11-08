@@ -3,8 +3,8 @@ from datetime import timedelta
 from fastapi import HTTPException
 from passlib.hash import pbkdf2_sha256
 
-from app.db import users_collection
-from app.security.jwt import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from app.db.connection import users_collection
+from app.security.jwt import create_access_token
 
 
 def verify_password(plain_password, hashed_password):
@@ -22,5 +22,6 @@ class AuthenticationService:
 
         # If the email is valid, issue a JWT token
         user_data = {"sub": email}  # You can customize the payload as needed
-        access_token = create_access_token(user_data, expires_delta=timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
+        access_token = create_access_token(user_data)
+        # TODO return pydantic scheme
         return {"access_token": access_token, "token_type": "bearer"}

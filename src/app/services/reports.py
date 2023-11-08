@@ -2,7 +2,7 @@ import csv
 
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
-from app.db import candidates_collection
+from app.db.connection import candidates_collection
 
 
 class ReportService:

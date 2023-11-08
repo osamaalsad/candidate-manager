@@ -1,4 +1,4 @@
-from app.db import users_collection
+from app.db.connection import users_collection
 from app.models.users import UserCreate
 
 

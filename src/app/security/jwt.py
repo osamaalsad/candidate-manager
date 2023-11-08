@@ -4,28 +4,24 @@ from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer
 from jose import JWTError, jwt
 from fastapi.security import HTTPAuthorizationCredentials
+from app.project.config import settings
 
-SECRET_KEY = "your-secret-key"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = HTTPBearer()
 
 
-def create_access_token(data: dict, expires_delta: timedelta = None):
+def create_access_token(data: dict, minutes: int = settings.ACCESS_TOKEN_EXPIRE_MINUTES):
     to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+
+    expire = datetime.utcnow() + timedelta(minutes=minutes)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
 
 def decode_token(token: str):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         return payload
     except JWTError:
         raise HTTPException(status_code=401, detail="Token has expired or is invalid")
