@@ -1,14 +1,15 @@
 from datetime import datetime, timedelta
 
 from fastapi import HTTPException, Depends
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPBearer
 from jose import JWTError, jwt
 
 SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = HTTPBearer()
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
@@ -32,3 +33,5 @@ def decode_token(token: str):
 def get_current_user(token: str = Depends(oauth2_scheme)):
     user = decode_token(token)
     return user
+
+
