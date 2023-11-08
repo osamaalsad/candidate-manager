@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer
 from jose import JWTError, jwt
+from fastapi.security import HTTPAuthorizationCredentials
 
 SECRET_KEY = "your-secret-key"
 ALGORITHM = "HS256"
@@ -30,8 +31,8 @@ def decode_token(token: str):
         raise HTTPException(status_code=401, detail="Token has expired or is invalid")
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
-    user = decode_token(token)
+def get_current_user(token: HTTPAuthorizationCredentials = Depends(oauth2_scheme)):
+    user = decode_token(token.credentials)
     return user
 
 

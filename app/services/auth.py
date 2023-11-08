@@ -17,7 +17,6 @@ class AuthenticationService:
     async def login_for_access_token(login_user):
         email = login_user.email
         user = await users_collection.find_one({"email": email})
-        print(verify_password(login_user.password, user["password"]))
         if not user or not verify_password(login_user.password, user["password"]):
             raise HTTPException(status_code=400, detail="Incorrect email or password")
 

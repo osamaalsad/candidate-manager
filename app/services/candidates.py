@@ -7,26 +7,26 @@ from app.models.candidates import CandidateCreate
 
 class CandidateService:
 
-    def create_candidate(self, candidate: CandidateCreate):
+    async def create_candidate(self, candidate: CandidateCreate):
         # Insert the candidate data into MongoDB
-        result = candidates_collection.insert_one(candidate.model_dump())
+        result = await candidates_collection.insert_one(candidate.model_dump())
 
         # Get the inserted candidate's ID
         inserted_id = result.inserted_id
 
         return CandidateCreate(**candidate.model_dump(), _id=str(inserted_id))
 
-    def get_candidate(self, candidate_id: str):
-        candidate = candidates_collection.find_one({"_id": ObjectId(candidate_id)})
+    async def get_candidate(self, candidate_id: str):
+        candidate = await candidates_collection.find_one({"_id": ObjectId(candidate_id)})
 
         if candidate:
             return CandidateCreate(**{**candidate, "_id": str(candidate.pop("_id"))})
         else:
             raise HTTPException(status_code=404, detail="Candidate not found")
 
-    def update_candidate(self, candidate_id: str, updated_candidate: CandidateCreate):
+    async def update_candidate(self, candidate_id: str, updated_candidate: CandidateCreate):
         # Update the candidate data in MongoDB
-        result = candidates_collection.update_one(
+        result = await candidates_collection.update_one(
             {"_id": ObjectId(candidate_id)}, {"$set": updated_candidate.model_dump()}
         )
 
@@ -35,8 +35,8 @@ class CandidateService:
         else:
             raise HTTPException(status_code=404, detail="Candidate not found")
 
-    def delete_candidate(self, candidate_id: str):
-        result = candidates_collection.delete_one({"_id": ObjectId(candidate_id)})
+    async def delete_candidate(self, candidate_id: str):
+        result = await candidates_collection.delete_one({"_id": ObjectId(candidate_id)})
 
         if result.deleted_count:
             return {"message": "Candidate deleted"}
