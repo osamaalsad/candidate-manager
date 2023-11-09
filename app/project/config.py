@@ -4,6 +4,8 @@ from pydantic import MongoDsn
 
 class MongoDBSettings(BaseSettings):
     MONGO_DSN: MongoDsn
+    MONGODB_USERNAME: str
+    MONGODB_PASSWORD: str
 
 
 class SecretSettings(BaseSettings):

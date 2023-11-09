@@ -4,7 +4,7 @@ from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer
 from jose import JWTError, jwt
 from fastapi.security import HTTPAuthorizationCredentials
-from app.project.config import settings
+from src.app.project.config import settings
 
 
 oauth2_scheme = HTTPBearer()
