@@ -2,7 +2,7 @@ import csv
 
 from fastapi import HTTPException
 from fastapi.responses import FileResponse
-from app.db.connection import candidates_collection
+from app.repositories.candidates import CandidatesRepository
 
 
 class ReportService:
@@ -10,7 +10,7 @@ class ReportService:
     @staticmethod
     async def generate_report():
         # Retrieve candidate data from the database
-        candidates = await candidates_collection.find({}).to_list(None)
+        candidates = await CandidatesRepository.get_all_candidate()
 
         if not candidates:
             raise HTTPException(status_code=404, detail="No candidates found in the database.")
