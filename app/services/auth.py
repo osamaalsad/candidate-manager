@@ -1,10 +1,8 @@
-from datetime import timedelta
-
 from fastapi import HTTPException
 from passlib.hash import pbkdf2_sha256
 
-from src.app.db.connection import users_collection
-from src.app.security.jwt import create_access_token
+from app.db.connection import users_collection
+from app.security.jwt import create_access_token
 
 
 def verify_password(plain_password, hashed_password):

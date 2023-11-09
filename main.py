@@ -1,7 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
-from src.app.routers import health, user, candidate, generate_report
-from src.app.security import auth
+from app.routers import candidate, generate_report
+from app.routers import health, user
+from app.security import auth
 
 app = FastAPI()
 
