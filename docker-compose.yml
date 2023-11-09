@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  candidates_profiles:
-    image: candidates_profiles
+  candidate_manager:
+    image: candidate_manager
     depends_on:
       - db
     build:
@@ -10,9 +10,10 @@ services:
       dockerfile: ./Dockerfile
     ports:
       - 8000:8000
-
     env_file:
       - .env
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/candidatemanagerdb
 
   db:
     image: mongo:latest
@@ -21,10 +22,4 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_PASSWORD}
     ports:
       - 27017:27017
-    volumes:
-      - db:/data/db
-volumes:
-  db:
-    driver: local
-
-
+    command: mongod --bind_ip_all
